@@ -60,7 +60,7 @@ gridEndY    = gridStartY + (gridHeight * gridSep);
             <string>/// debug draw minimap
 draw_set_color(c_white);
 draw_text(0, 0, "Zoom " + string(CAMERA.zoom) );
-
+draw_text(0, 15, "Coords: " + string(getColumnFromX(mouse_x)) +":" + string(getRowFromY(mouse_y)));
 
 
 /*

@@ -113,9 +113,8 @@ if (keyboard_check(ord('D'))) {
 
 if (zoom &lt; maxZoom) {
     zoom++;
+    updateZoom();
 }
-
-updateZoom();
 </string>
           </argument>
         </arguments>
@@ -142,9 +141,10 @@ updateZoom();
 
 if (zoom &gt; 0) {
     zoom--;
+    updateZoom();
 }
 
-updateZoom();
+
 </string>
           </argument>
         </arguments>

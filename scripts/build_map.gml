@@ -1,6 +1,10 @@
 /// build_map()
 // build the rooms
+show_debug_message("");
+show_debug_message("");
 show_debug_message("******** MAP GENERATED - BUILDING *******");
+show_debug_message("");
+show_debug_message("");
 
 // create a large grid to hold each room
 ds_grid_clear(global.GRID, EMPTY);
@@ -22,7 +26,7 @@ for (var blueprintColumn = 0; blueprintColumn < blueprintWidth; blueprintColumn+
         var chunk = ds_grid_get(chunkBlueprint, blueprintColumn, blueprintRow);
         
         if (chunk > 0) {
-            show_debug_message("Chunk is: " + string(chunk));
+            //show_debug_message("Chunk is: " + string(chunk));
             
             for (var innerColumn = 0; innerColumn < chunkWidth; innerColumn++) {
                 for (var innerRow = 0; innerRow < chunkHeight; innerRow++) {
@@ -31,17 +35,39 @@ for (var blueprintColumn = 0; blueprintColumn < blueprintWidth; blueprintColumn+
                     if (content != 0) { // 0 is void, 1 is floor, 2 is wall, etc
                         var targetColumn = ((blueprintColumn * chunkWidth)  + innerColumn);
                         var targetRow    = ((blueprintRow    * chunkHeight) + innerRow);
-                        show_debug_message("blueprint coords: " +string(blueprintColumn) + ":" + string(blueprintRow));
-                        show_debug_message("targetCol: " +string(targetColumn) + "  targetRow: " + string(targetRow));
                         build(targetColumn, targetRow, ds_list_find_value(global.MAP_PIECES_LIST, content));
                     }
                 }
             }
+            
+            // north
+            if (inBounds(blueprintColumn, blueprintRow-1)) {
+                var northChunk = ds_grid_get(chunkBlueprint, blueprintColumn, blueprintRow-1);
+                if (northChunk == EMPTY) {
+                    //show_debug_message("Nothing found to the north");
+                } else {
+                    //show_debug_message("Chunk found to the north");
+                    chunk_bridgeNorth(blueprintColumn, blueprintRow, false);
+                }
+            }
+            
+            // west
+            if (inBounds(blueprintColumn-1, blueprintRow)) {
+                var westChunk = ds_grid_get(chunkBlueprint, blueprintColumn-1, blueprintRow);
+                if (westChunk == EMPTY) {
+                    //show_debug_message("Nothing found to the west");
+                } else {
+                    //show_debug_message("Chunk found to the west");
+                    chunk_bridgeWest(blueprintColumn, blueprintRow, false);
+                }
+            }
+            
         }
     }
 }
 
 
-// programmatically fill in missing outer walls
+// programmatically fill in outer walls
+
 
 // place an entrance point for the player

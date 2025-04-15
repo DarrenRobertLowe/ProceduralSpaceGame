@@ -1,11 +1,13 @@
-///generate_map
+///generate_map(min rooms, random variation)
 /* This is where stages are built before the player
  * enters them.
  */
- 
+var minRooms  = argument0;
+var variation = argument1;
+
 // A different generator could be used for varying types of stages.
 // For example, one could be ancient runes or caverns, and be totally random.
-// Another could be very methodical and for space ships.
+// Another could be very methodical and used for space ships.
 
 
 var chunkBlueprint = global.chunkBlueprint;
@@ -15,9 +17,8 @@ ds_grid_clear(chunkBlueprint, EMPTY);
 var choice = round(random(ds_list_size(global.chunks)));
 var chunk  = ds_list_find_value(global.chunks, choice);
 
-var centreColumn = floor(  ds_grid_width(chunkBlueprint) * 0.5);
-var centreRow    = floor( ds_grid_height(chunkBlueprint) * 0.5);
-var startRoom    = ds_grid_set(chunkBlueprint, centreColumn, centreRow, choice);
+var centreColumn = floor(ds_grid_width(chunkBlueprint)  * 0.5);
+var centreRow    = floor(ds_grid_height(chunkBlueprint) * 0.5);
 var currentColumn = centreColumn;   // keeps track of our column as we create more roooms
 var currentRow    = centreRow;      // keeps track of our row as we create more roooms
 var targetColumn  = currentColumn;
@@ -26,10 +27,10 @@ var directions    = ds_list_create();
 
 
 // decide on how many rooms/chunks there'll be on this map
-var roomsToCreate = 1 + round(random(5));
+var roomsToCreate = minRooms + round(random(variation));
 
 // Create the rooms/chunks
-for(roomsToCreate = roomsToCreate; roomsToCreate > 0; roomsToCreate--) {
+for(; roomsToCreate > 0; roomsToCreate--) {
     // setup
     cellValid = false;
     ds_list_clear(directions);
@@ -46,8 +47,7 @@ for(roomsToCreate = roomsToCreate; roomsToCreate > 0; roomsToCreate--) {
         
         // choose a direction
         var direct = ds_list_find_value(directions, irandom(ds_list_size(directions) -1));
-        show_debug_message("direction chosen: " +string(direct));
-        
+
         // place the chunk
         switch (direct) {
             case "north":
@@ -74,12 +74,9 @@ for(roomsToCreate = roomsToCreate; roomsToCreate > 0; roomsToCreate--) {
         // invalid cell?
         var existingValue = ds_grid_get(chunkBlueprint, targetColumn, targetRow);
         
-        if !(inBounds(targetColumn, targetRow))
+        if !(inBoundsGrid(chunkBlueprint, targetColumn, targetRow))
         or (existingValue != EMPTY) {
-            show_debug_message("Cell was invalid for placement - " + string(targetColumn) +":" +string(targetRow));
-            show_debug_message("Reason: existingValue=" + string(existingValue) + ", grid width: " +string(ds_grid_width(chunkBlueprint)) + ", grid height: " +string(ds_grid_height(chunkBlueprint)));
             ds_list_delete(directions, ds_list_find_index(directions, direct)); // remove e.g. "north" from available choices
-            show_debug_message("removed "+string(direct) +" from available directions.");
         } else {
             cellValid = true;
             
@@ -90,11 +87,17 @@ for(roomsToCreate = roomsToCreate; roomsToCreate > 0; roomsToCreate--) {
             
             currentColumn = targetColumn;
             currentRow = targetRow;
+            var movedCoords = centerBlueprintChunks(chunkBlueprint);
             
-            show_debug_message("successfully created a new room!");
+            // extract the coords from movedCoords
+            var pos = string_pos(":", movedCoords);
+            var movedColumn = string_copy(movedCoords, 1, pos-1);
+            var movedRow = string_copy(movedCoords, pos+1, string_length(movedCoords));
+            
+            currentColumn += real(movedColumn);
+            currentRow += real(movedRow);
+            
+            show_debug_message("currentColumn: "+ string(currentColumn) + ", currentRow: "+string(currentRow));
         }
     }
 }
-
-
-show_debug_message("Finished Map Generation! - Moving onto Stage Building");

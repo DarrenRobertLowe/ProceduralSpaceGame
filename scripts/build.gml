@@ -20,12 +20,12 @@ var grid = instance.grid;
 
 if (ds_grid_get(grid, column, row) > 0) {
     var existing = ds_grid_get(grid, column, row);
-    error("Warning! build() grid coords were already occupied! "
-    + object_get_name(instance.object_index) +":"+ string(instance) + " replaced " + object_get_name(existing.object_index) +":" + string(existing)
-    + " at " +string(column) + ":" + string(row));
+    //error("Warning! build() grid coords were already occupied! "
+    //+ object_get_name(instance.object_index) +":"+ string(instance) + " replaced " + object_get_name(existing.object_index) +":" + string(existing)
+    //+ " at " +string(column) + ":" + string(row));
 }
 ds_grid_set(grid, column, row, instance);
 
-show_debug_message("Placed " +string(object_get_name(instance.object_index) + " at " +string(column) +":" +string(row)));
+//show_debug_message("Placed " +string(object_get_name(instance.object_index) + " at " +string(column) +":" +string(row)));
 
 return instance;

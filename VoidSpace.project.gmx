@@ -29,8 +29,10 @@
       <script>scripts\isTypeOf.gml</script>
     </scripts>
     <scripts name="Environment">
-      <script>scripts\build.gml</script>
+      <script>scripts\generate_map.gml</script>
+      <script>scripts\build_map.gml</script>
       <scripts name="Architecture">
+        <script>scripts\build.gml</script>
         <scripts name="Walls">
           <script>scripts\getWall.gml</script>
         </scripts>
@@ -65,10 +67,18 @@
     <scripts name="Deprecated">
       <script>scripts\teleport.gml</script>
     </scripts>
-    <script>scripts\generate_map.gml</script>
-    <script>scripts\updateZoom.gml</script>
-    <script>scripts\build_map.gml</script>
-    <script>scripts\center_view.gml</script>
+    <scripts name="Camera">
+      <script>scripts\updateZoom.gml</script>
+      <script>scripts\center_view.gml</script>
+    </scripts>
+    <script>scripts\chunk_bridgeWest.gml</script>
+    <script>scripts\chunk_bridgeNorth.gml</script>
+    <script>scripts\inBoundsGrid.gml</script>
+    <script>scripts\findLeftmostChunk.gml</script>
+    <script>scripts\findRightmostChunk.gml</script>
+    <script>scripts\findTopmostChunk.gml</script>
+    <script>scripts\findBottommostChunk.gml</script>
+    <script>scripts\centerBlueprintChunks.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\MASTER</object>
