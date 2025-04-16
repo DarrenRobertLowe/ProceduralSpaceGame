@@ -29,12 +29,9 @@
 event_inherited();
 refreshStructureSprites();
 
-generate_map(500, 100);
+generate_map(30, 30);
 build_map();
 
-
-// set player spawn point
-global.player = spawn(100, 100, PLAYER);
 
 instance_create(-1, -1, CAMERA);
 instance_create(-1, -1, DEBUGGER);

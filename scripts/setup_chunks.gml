@@ -35,8 +35,6 @@ while !(file_text_eof(chunksFile)) {
     newChunk.content = chunk;
     
     ds_list_add(global.chunks, newChunk);
-    
-    show_debug_message("verify: " +string(ds_list_find_value(global.chunks, chunk)));
     file_text_readln(chunksFile);
 }
 

@@ -26,16 +26,21 @@ for (var blueprintColumn = 0; blueprintColumn < blueprintWidth; blueprintColumn+
         var chunk = ds_grid_get(chunkBlueprint, blueprintColumn, blueprintRow);
         
         if (chunk > 0) {
-            //show_debug_message("Chunk is: " + string(chunk));
-            
             for (var innerColumn = 0; innerColumn < chunkWidth; innerColumn++) {
                 for (var innerRow = 0; innerRow < chunkHeight; innerRow++) {
                     
                     var content = ds_grid_get(chunk.content, innerColumn, innerRow);
                     if (content != 0) { // 0 is void, 1 is floor, 2 is wall, etc
+                        var contentObj = ds_list_find_value(global.MAP_PIECES_LIST, content);
                         var targetColumn = ((blueprintColumn * chunkWidth)  + innerColumn);
                         var targetRow    = ((blueprintRow    * chunkHeight) + innerRow);
-                        build(targetColumn, targetRow, ds_list_find_value(global.MAP_PIECES_LIST, content));
+                        
+                        if ((contentObj) != PLAYER) {
+                            build(targetColumn, targetRow, ds_list_find_value(global.MAP_PIECES_LIST, content));
+                        } else {
+                            build(targetColumn, targetRow, FLOOR);
+                            spawn(targetColumn, targetRow, PLAYER);
+                        }
                     }
                 }
             }
@@ -66,8 +71,5 @@ for (var blueprintColumn = 0; blueprintColumn < blueprintWidth; blueprintColumn+
     }
 }
 
-
 // programmatically fill in outer walls
-
-
-// place an entrance point for the player
+map_build_walls();

@@ -29,15 +29,20 @@
 view_enabled = true;
 view_visible[0] = true;
 
-viewOffsetX = (view_wview[0] * 0.5);
-viewOffsetY = (view_hview[0] * 0.5);
-
-getGridInfo();
-
+freelook = false;
 zoom = 1;
 updateZoom();
 maxZoom = 3;
 panSpeed = 10;
+
+viewOffsetX = (view_wview[0] * 0.5) * zoom;
+viewOffsetY = (view_hview[0] * 0.5) * zoom;
+
+getGridInfo();
+
+
+
+
 </string>
           </argument>
         </arguments>
@@ -61,31 +66,32 @@ panSpeed = 10;
           <argument>
             <kind>1</kind>
             <string>/// keep the view on the player
-
-/*
-if (instance_exists(PLAYER)) {
-    x = PLAYER.x - viewOffsetX;
-    y = PLAYER.y - viewOffsetY;
-}
-*/
-
 view_xview[0] = x;
 view_yview[0] = y;
+viewOffsetX = (view_wview[0] * 0.5) * zoom;
+viewOffsetY = (view_hview[0] * 0.5) * zoom;
 
-if (keyboard_check(ord('W'))) {
-    y -= panSpeed;
-}
-
-if (keyboard_check(ord('S'))) {
-    y += panSpeed;
-}
-
-if (keyboard_check(ord('A'))) {
-    x -= panSpeed;
-}
-
-if (keyboard_check(ord('D'))) {
-    x += panSpeed;
+if (freelook = false) {
+    if (instance_exists(PLAYER)) {
+        x = PLAYER.x - viewOffsetX;
+        y = PLAYER.y - viewOffsetY;
+    }
+} else {
+    if (keyboard_check(ord('W'))) {
+        y -= panSpeed;
+    }
+    
+    if (keyboard_check(ord('S'))) {
+        y += panSpeed;
+    }
+    
+    if (keyboard_check(ord('A'))) {
+        x -= panSpeed;
+    }
+    
+    if (keyboard_check(ord('D'))) {
+        x += panSpeed;
+    }
 }
 </string>
           </argument>

@@ -79,6 +79,7 @@
     <script>scripts\findTopmostChunk.gml</script>
     <script>scripts\findBottommostChunk.gml</script>
     <script>scripts\centerBlueprintChunks.gml</script>
+    <script>scripts\map_build_walls.gml</script>
   </scripts>
   <objects name="objects">
     <object>objects\MASTER</object>

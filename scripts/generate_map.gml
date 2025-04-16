@@ -29,6 +29,12 @@ var directions    = ds_list_create();
 // decide on how many rooms/chunks there'll be on this map
 var roomsToCreate = minRooms + round(random(variation));
 
+// create initial room
+var chunk = ds_list_find_value(global.chunks, 0);
+ds_grid_set(chunkBlueprint, targetColumn, targetRow, chunk);
+currentColumn = targetColumn;
+currentRow = targetRow;
+
 // Create the rooms/chunks
 for(; roomsToCreate > 0; roomsToCreate--) {
     // setup
@@ -82,11 +88,14 @@ for(; roomsToCreate > 0; roomsToCreate--) {
             
             // blueprint the room
             var choice = irandom(ds_list_size(global.chunks) - 1);
+            if (choice < 1) then choice = 1; // 0 is reserved for starting room/chunk
             var chunk = ds_list_find_value(global.chunks, choice);
             ds_grid_set(chunkBlueprint, targetColumn, targetRow, chunk);
             
             currentColumn = targetColumn;
             currentRow = targetRow;
+
+            /*
             var movedCoords = centerBlueprintChunks(chunkBlueprint);
             
             // extract the coords from movedCoords
@@ -98,6 +107,7 @@ for(; roomsToCreate > 0; roomsToCreate--) {
             currentRow += real(movedRow);
             
             show_debug_message("currentColumn: "+ string(currentColumn) + ", currentRow: "+string(currentRow));
+            */
         }
     }
 }

@@ -1,7 +1,7 @@
 /// setup_grids
 
-global.blueprintGridWidth  = 30; // how many chunks(rooms) a map can be wide
-global.blueprintGridHeight = 30; // how many chunks(rooms) a map can be tall
+global.blueprintGridWidth  = 20; // how many chunks(rooms) a map can be wide
+global.blueprintGridHeight = 20; // how many chunks(rooms) a map can be tall
 global.chunkBlueprint = ds_grid_create(global.blueprintGridWidth, global.blueprintGridHeight);
 
 global.gridWidth  = (global.blueprintGridWidth * global.chunkWidth);   // the actual final global.GRID width 
